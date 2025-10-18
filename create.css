@@ -1,0 +1,20 @@
+body{
+    background-color: blanchedalmond;
+    padding:10px
+}
+
+
+.cards{
+    display:flex;
+    flex-direction: column;
+    justify-content: center;
+    background-color: aquamarine;
+
+    padding:10px;
+    margin-top:10px;
+    margin-bottom:10px;
+
+    width:800px;
+    height:fit-content;
+
+}

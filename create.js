@@ -1,0 +1,91 @@
+arrOfInputs = document.querySelectorAll(".cardInput")
+newCardBtn = document.getElementById("newCardBtn")
+saveCardBtn = document.getElementById("saveCardsBtn")
+placeholdingDiv = document.getElementById("placeholdingDiv")
+divOfCards = document.getElementById("divOfCards")
+
+
+
+let objOfCards = {}
+let numOfCards = 0
+
+
+//-----------------------------------------------------------------------------
+//Running
+makeNewCard()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//---------------------------------------------------------------------------------
+//Functions
+
+function textF(term, def) {
+
+    term.addEventListener("input", () => {
+        term.style.height = "auto"
+        term.style.height = term.scrollHeight + "px"
+
+        parent = term.parentNode.parentNode.id
+        console.log(parent)
+        objOfCards[parent]["term"] = term.value
+        console.log(objOfCards[parent]["term"])
+    })
+    def.addEventListener("input", () => {
+        def.style.height = "auto"
+        def.style.height = def.scrollHeight + "px"
+
+        parent = term.parentNode.parentNode.id
+        console.log(parent)
+        objOfCards[parent]["def"] = def.value
+        console.log(objOfCards[parent]["def"])
+    })
+
+}
+
+
+
+
+newCardBtn.onclick = () => {
+    makeNewCard()
+}
+
+function makeNewCard() {
+    numOfCards++
+
+    const newDiv = placeholdingDiv.cloneNode(true)
+    newDiv.style.display = "flex"
+    newDiv.id = "cardDiv" + numOfCards
+    input = newDiv.querySelectorAll(".cardInput")
+    textF(input[0], input[1])
+    divOfCards.appendChild(newDiv)
+
+
+
+
+    if (objOfCards["cardDiv" + numOfCards] == null) {
+        objOfCards["cardDiv" + numOfCards] = {
+            "at": newDiv,
+            "term": "",
+            "def": ""
+        }
+    }
+    console.log(objOfCards)
+
+
+
+}

@@ -1,11 +1,11 @@
 body{
-    background-color: blanchedalmond;
+    background-color: rgb(56, 47, 34);
     padding:10px
 }
 
 
 .cards{
-    display:flex;
+    display:none;
     flex-direction: column;
     justify-content: center;
     background-color: aquamarine;
@@ -17,4 +17,12 @@ body{
     width:800px;
     height:fit-content;
 
+}
+.cardInput{
+    font-size:20px;
+    width:500px;
+    min-height:1.5em;
+    resize: none;
+    
+    
 }

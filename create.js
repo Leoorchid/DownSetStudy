@@ -64,6 +64,8 @@ newCardBtn.onclick = () => {
     makeNewCard()
 }
 
+
+
 function makeNewCard() {
     numOfCards++
 
@@ -72,10 +74,9 @@ function makeNewCard() {
     newDiv.id = "cardDiv" + numOfCards
     input = newDiv.querySelectorAll(".cardInput")
     textF(input[0], input[1])
+    const dltBtn = newDiv.querySelector(".dltBtn")
+
     divOfCards.appendChild(newDiv)
-
-
-
 
     if (objOfCards["cardDiv" + numOfCards] == null) {
         objOfCards["cardDiv" + numOfCards] = {
@@ -86,6 +87,17 @@ function makeNewCard() {
     }
     console.log(objOfCards)
 
+    dltBtn.onclick = () => {
+        deleteCard(dltBtn)
+    }
 
+}
 
+function deleteCard(btn) {
+    parent = btn.parentNode
+    console.log(parent.id)
+    delete objOfCards[parent.id]
+    parent.remove()
+
+    console.log(objOfCards)
 }

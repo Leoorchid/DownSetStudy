@@ -23,6 +23,12 @@ body{
     width:500px;
     min-height:1.5em;
     resize: none;
-    
-    
 }
+.dltBtn{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    align-self: self-end;
+    width:20px;
+}
+    

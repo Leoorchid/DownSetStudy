@@ -3,10 +3,13 @@ newCardBtn = document.getElementById("newCardBtn")
 saveCardBtn = document.getElementById("saveCardsBtn")
 placeholdingDiv = document.getElementById("placeholdingDiv")
 divOfCards = document.getElementById("divOfCards")
+title = document.getElementById("title")
+
 
 
 
 let objOfCards = {}
+let overCards = {}
 let numOfCards = 0
 
 
@@ -57,7 +60,11 @@ function textF(term, def) {
 
 }
 
+title.addEventListener("input", () => {
 
+    objOfCards["title"] = title.value
+    console.log(title.value)
+})
 
 
 newCardBtn.onclick = () => {
@@ -100,4 +107,25 @@ function deleteCard(btn) {
     parent.remove()
 
     console.log(objOfCards)
+}
+
+saveCardBtn.onclick = () => {
+
+    saveCards()
+}
+
+async function saveCards() {
+
+    res = await fetch("http://127.0.0.1:8000/send", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(objOfCards)
+
+    });
+
+    const data = await res.json()
+    console.log("Message: ", data)
+
 }

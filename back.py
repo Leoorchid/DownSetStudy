@@ -32,9 +32,8 @@ async def root():
 @app.post("/send")
 async def send(request: Request):
     data = await request.json()
-    print("Got from JS:", data["title"])
+    print("Got from JS:", data)
     title = f"{re.sub(r"\W+", "_", data["title"])}"
-    
 
     cur.execute(
         f"""
@@ -46,17 +45,13 @@ async def send(request: Request):
                 def TEXT   
                 
                 )
-"""
+        """
     )
     conn.commit()
 
-    for 
-    cur.execute(
-        f"""
-    INSERT INTO {title} (term,def) VALUES ({term},{defs})
+    for u in data:
+        print(data[u])
 
-"""
-    )
     conn.commit()
 
     return {"status": "ok", "d": data}

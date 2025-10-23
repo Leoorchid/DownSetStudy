@@ -9,8 +9,7 @@ import re
 app = FastAPI()
 storeCards = "card.db"
 
-conn = sqlite3.connect(storeCards)
-cur = conn.cursor()
+
 
 
 origins = ["http://127.0.0.1:5500"]  # your frontend URL
@@ -33,25 +32,39 @@ async def root():
 async def send(request: Request):
     data = await request.json()
     print("Got from JS:", data)
-    title = f"{re.sub(r"\W+", "_", data["title"])}"
+    cardToDb(data)
 
-    cur.execute(
-        f"""
+    return {"status": "ok",}
 
-    CREATE TABLE IF NOT EXISTS {title}(
 
-                id INTEGER PRIMARY KEY AUTOINCREMENT,
-                term TEXT,
-                def TEXT   
-                
-                )
-        """
-    )
+def cardToDb(holdingData):
+    conn = sqlite3.connect(storeCards)
+    cur = conn.cursor()
+
+    title = holdingData.get("title", "untitled").strip()
+    if not title:
+        title = "untitled"
+    title = re.sub(r"\W+", "_", title)
+
+    # Create table
+    cur.execute(f'''
+        CREATE TABLE IF NOT EXISTS "{title}" (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            term TEXT,
+            def TEXT
+        )
+    ''')
+
+    # Insert cards
+    for key, card in holdingData.items():
+        if key.startswith("cardDiv"):
+            term = card["term"]
+            definition = card["def"]
+            print(term, definition)
+            cur.execute(
+                f'INSERT INTO "{title}" (term, def) VALUES (?, ?)',
+                (term, definition)
+            )
+
     conn.commit()
-
-    for u in data:
-        print(data[u])
-
-    conn.commit()
-
-    return {"status": "ok", "d": data}
+    conn.close()

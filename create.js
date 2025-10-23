@@ -21,19 +21,6 @@ makeNewCard()
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
 //---------------------------------------------------------------------------------
 //Functions
 
@@ -97,6 +84,7 @@ function makeNewCard() {
     dltBtn.onclick = () => {
         deleteCard(dltBtn)
     }
+    
 
 }
 
@@ -109,23 +97,31 @@ function deleteCard(btn) {
     console.log(objOfCards)
 }
 
-saveCardBtn.onclick = () => {
-
-    saveCards()
-}
+saveCardBtn.addEventListener("click", async (event) => {
+    event.preventDefault();
+    try {
+        await saveCards();
+        window.location.href = await "view.html"
+    } catch (err) {
+        console.error("Save failed:", err);
+    }
+    
+})
 
 async function saveCards() {
+    try {
+        const res = await fetch("http://127.0.0.1:8000/send", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(objOfCards)
+        });
 
-    res = await fetch("http://127.0.0.1:8000/send", {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify(objOfCards)
-
-    });
-
-    const data = await res.json()
-    console.log("Message: ", data)
-
+        if (!res.ok) throw new Error(`HTTP error: ${res.status}`)
+        
+        const data = await res.json()
+        console.log("Message:", data)
+    } 
+    catch (err) {
+        console.error("Save failed:", err)
+    }
 }

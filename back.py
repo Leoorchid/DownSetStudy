@@ -38,6 +38,7 @@ async def send(request: Request):
 
 
 def cardToDb(holdingData):
+
     conn = sqlite3.connect(storeCards)
     cur = conn.cursor()
 
@@ -68,3 +69,17 @@ def cardToDb(holdingData):
 
     conn.commit()
     conn.close()
+
+
+@app.get("/giveCards")
+async def give():
+    smart()
+
+
+def smart():
+    conn = sqlite3.connect(storeCards)
+    cur = conn.cursor()
+
+    cur.execute("SELECT term,def")
+
+    

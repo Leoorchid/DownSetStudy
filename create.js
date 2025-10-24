@@ -66,6 +66,7 @@ function makeNewCard() {
     const newDiv = placeholdingDiv.cloneNode(true)
     newDiv.style.display = "flex"
     newDiv.id = "cardDiv" + numOfCards
+    newDiv.class = "cardInput "
     input = newDiv.querySelectorAll(".cardInput")
     textF(input[0], input[1])
     const dltBtn = newDiv.querySelector(".dltBtn")
@@ -101,7 +102,7 @@ saveCardBtn.addEventListener("click", async (event) => {
     event.preventDefault();
     try {
         await saveCards();
-        window.location.href = await "view.html"
+        
     } catch (err) {
         console.error("Save failed:", err);
     }
@@ -119,7 +120,14 @@ async function saveCards() {
         if (!res.ok) throw new Error(`HTTP error: ${res.status}`)
         
         const data = await res.json()
-        console.log("Message:", data)
+        if (data.status=="ok")
+        {
+           console.log("Message:", data) 
+        }
+        else{
+            console.log("Message" + data.status)
+        }
+        
     } 
     catch (err) {
         console.error("Save failed:", err)
